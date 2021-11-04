@@ -1,0 +1,328 @@
+{% extends "base.jinja" %}
+
+{% block title %}Messages{% endblock %}
+
+{% macro show_media(message) %}
+  {% if message.has_media == true %}
+    {% if message.type == "image" or message.type == "sticker" %}
+      <!-- Safari does NOT SUPPORT .WebP -->
+      <img style="height: 100%; max-height: 200px;" src="{{ url_for('static', filename='media/'+message.mediaID+message.media_ext) }}" alt="">
+    {% elif message.type == "video" %}
+      <video height=200 src="{{ url_for('static', filename='media/'+message.mediaID+message.media_ext) }}"></video>
+    {% elif message.type == "audio" or message.type == "ptt" %}
+      <audio controls>
+        <!-- Safari does NOT SUPPORT .OGG/.OGA -->
+        <source src="{{ url_for('static', filename='media/'+message.mediaID+message.media_ext) }}" type="audio/ogg">
+      </audio>
+    {% else %}
+      <p><em>Sorry, it seems like this media is not supported yet. Sorry</em></p>
+    {% endif %}
+    <br/>
+  {% endif %}
+{% endmacro %}
+
+{% block body %}
+
+<!-- START WEBP PROCESSING STUFF -->
+<script src="https://unpkg.com/webp-hero@0.0.0-dev.27/dist-cjs/polyfills.js"></script>
+<script src="https://unpkg.com/webp-hero@0.0.0-dev.27/dist-cjs/webp-hero.bundle.js"></script>
+<script>
+	var webpMachine = new webpHero.WebpMachine()
+	webpMachine.polyfillDocument()
+</script>
+<!-- END WEBP PROCESSING STUFF -->
+
+<style type="text/css">
+  *, *:before, *:after {
+    box-sizing: inherit;
+  }
+
+  html {
+    box-sizing: border-box;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-family: "Roboto", sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+  }
+
+  .page {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .marvel-device .screen {
+    text-align: left;
+  }
+
+  .screen-container {
+    height: 100%;
+  }
+
+
+  /* Chat */
+
+  .chat {
+    height: calc(100% - 69px);
+  }
+
+  .chat-container {
+    height: 100%;
+  }
+
+
+  /* Background image */
+  .conversation {
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    background: #efe7dd url("https://cloud.githubusercontent.com/assets/398893/15136779/4e765036-1639-11e6-9201-67e728e86f39.jpg") repeat;
+    z-index: 0;
+  }
+
+  .conversation ::-webkit-scrollbar {
+    transition: all .5s;
+    width: 5px;
+    height: 1px;
+    z-index: 10;
+  }
+
+  .conversation ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .conversation ::-webkit-scrollbar-thumb {
+    background: #b3ada7;
+  }
+
+  .conversation .conversation-container {
+    height: calc(100% - 68px);
+    box-shadow: inset 0 10px 10px -10px #000000;
+    overflow-x: hidden;
+    padding: 0 16px;
+    margin-bottom: 5px;
+  }
+
+  .conversation .conversation-container:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+
+  /* Messages */
+
+  .message {
+    color: #000;
+    clear: both;
+    line-height: 18px;
+    font-size: 15px;
+    padding: 8px;
+    position: relative;
+    margin: 8px 0;
+    max-width: 85%;
+    word-wrap: break-word;
+    z-index: -1;
+  }
+
+  .message:after {
+    position: absolute;
+    content: "";
+    width: 0;
+    height: 0;
+    border-style: solid;
+  }
+
+  .metadata {
+    display: inline-block;
+    float: right;
+    padding: 0 0 0 7px;
+    position: relative;
+    bottom: -4px;
+  }
+
+  .timestamp {
+    color: rgba(0, 0, 0, .45);
+    font-size: 11px;
+    display: inline-block;
+  }
+
+  .metadata .tick {
+    display: inline-block;
+    margin-left: 2px;
+    position: relative;
+    top: 4px;
+    height: 16px;
+    width: 16px;
+  }
+
+  .metadata .tick svg {
+    position: absolute;
+    transition: .5s ease-in-out;
+  }
+
+  .metadata .tick svg:first-child {
+    -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+    -webkit-transform: perspective(800px) rotateY(180deg);
+            transform: perspective(800px) rotateY(180deg);
+  }
+
+  .metadata .tick svg:last-child {
+    -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+    -webkit-transform: perspective(800px) rotateY(0deg);
+            transform: perspective(800px) rotateY(0deg);
+  }
+
+  .metadata .tick-animation svg:first-child {
+    -webkit-transform: perspective(800px) rotateY(0);
+            transform: perspective(800px) rotateY(0);
+  }
+
+  .metadata .tick-animation svg:last-child {
+    -webkit-transform: perspective(800px) rotateY(-179.9deg);
+            transform: perspective(800px) rotateY(-179.9deg);
+  }
+
+  .message:first-child {
+    margin: 16px 0 8px;
+  }
+
+  .message.received {
+    background: #fff;
+    border-radius: 0px 5px 5px 5px;
+    float: left;
+  }
+
+  .message.received .metadata {
+    padding: 0 0 0 16px;
+  }
+
+  .message.received:after {
+    border-width: 0px 10px 10px 0;
+    border-color: transparent #fff transparent transparent;
+    top: 0;
+    left: -10px;
+  }
+
+  .message.sent {
+    background: #e1ffc7;
+    border-radius: 5px 0px 5px 5px;
+    float: right;
+  }
+
+  .message.sent:after {
+    border-width: 0px 0 10px 10px;
+    border-color: transparent transparent transparent #e1ffc7;
+    top: 0;
+    right: -10px;
+  }
+
+  .name {
+    font-size: 80%;
+    padding-bottom: 1em;
+    color: rgba(0, 0, 0, .75);
+  }
+
+  /* Small Screens */
+  @media (max-width: 768px) {
+    .marvel-device.nexus5 {
+      border-radius: 0;
+      flex: none;
+      padding: 0;
+      max-width: none;
+      overflow: hidden;
+      height: 100%;
+      width: 100%;
+    }
+
+    .marvel-device > .screen .chat {
+      visibility: visible;
+    }
+
+    .marvel-device {
+      visibility: hidden;
+    }
+
+    .marvel-device .status-bar {
+      display: none;
+    }
+
+    .screen-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+    }
+
+    .conversation {
+      height: calc(100vh - 55px);
+    }
+    .conversation .conversation-container {
+      height: calc(100vh - 120px);
+    }
+
+    .name {
+      font-size: 80%;
+      padding-bottom: 1em;
+      color: rgba(0, 0, 0, .75);
+    }
+
+  }
+</style>
+
+
+
+<div class="marvel-device nexus5">
+  <div class="sleep"></div>
+  <div class="volume"></div>
+  <div class="camera"></div>
+  <div class="screen">
+      <div class="chat">
+        <div class="chat-container">
+          <div class="conversation">
+            <div class="conversation-container" style="height:100%;">
+
+              {% for message in messages %}
+                {% if message.sender == "972535389642@c.us" %}
+                  <div class="message sent">
+                    {{ message.body }}
+                    <span class="metadata">
+                        <span class="time"></span><span class="tick"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="15" id="msg-dblcheck-ack" x="2063" y="2076"><path d="M15.01 3.316l-.478-.372a.365.365 0 0 0-.51.063L8.666 9.88a.32.32 0 0 1-.484.032l-.358-.325a.32.32 0 0 0-.484.032l-.378.48a.418.418 0 0 0 .036.54l1.32 1.267a.32.32 0 0 0 .484-.034l6.272-8.048a.366.366 0 0 0-.064-.512zm-4.1 0l-.478-.372a.365.365 0 0 0-.51.063L4.566 9.88a.32.32 0 0 1-.484.032L1.892 7.77a.366.366 0 0 0-.516.005l-.423.433a.364.364 0 0 0 .006.514l3.255 3.185a.32.32 0 0 0 .484-.033l6.272-8.048a.365.365 0 0 0-.063-.51z" fill="#4fc3f7"/></svg></span>
+                    </span>
+                  </div>
+                {% else %}
+                  <div class="message received">
+                    <span class="name">{{ message.pushname }}
+                      {% if message.is_group %} @ {{ message.chat_name }}{% endif %}
+                       <br></span>
+                    {{ show_media(message) }}
+                    <span>{{ message.body }}</span>
+                    <span style="color: rgba(0, 0, 0, .45); font-size: 11px; display: inline-block;">
+                      <script type="text/javascript">
+                        document.write(prettyDate( {{ message.sent_at }}))
+                      </script>
+                    </span>
+                  </div>
+                {% endif %}
+              {% endfor %}
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

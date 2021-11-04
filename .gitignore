@@ -1,0 +1,7 @@
+*.pem
+static/*
+!static/*.css
+!static/*.js
+!static/*.html
+config.py
+whatsapp.json

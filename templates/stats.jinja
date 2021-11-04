@@ -1,0 +1,16 @@
+{% extends "base.jinja" %}
+
+{% block title %}Stats Page{% endblock %}
+
+{% block body %}
+
+<br>
+{% for i in data %}
+<hr>
+<b>{{ i }}</b>
+
+<br>
+
+{% endfor %}
+
+{% endblock %}

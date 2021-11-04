@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>{% block title %} {% endblock %}</title>
+  <link rel="stylesheet" href="https://whatsfordinnerbinny.com:1234/static/main.css">
+  <script type="text/javascript">
+    function prettyDate(timestamp) {
+      function pad(n, width, z) {
+        z = z || '0';
+        n = n + '';
+        return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+      }
+      if (timestamp < 2000000000) // If it's less than 2Billion, it's seconds and
+        timestamp *= 1000;      // needs to be converted to milliseconds
+      let time = new Date(timestamp);
+      let hours = time.getHours();
+      let am = true;
+      if (hours >= 13) {
+        am = false;
+        hours -= 12;
+      }
+      if (hours == 0) hours = 12;
+      let minutes = time.getMinutes();
+      return hours + ":" + pad(minutes, 2) + " " + (am ? "AM" : "PM");
+    }
+  </script>
+  <nav class="navbar">
+    <ul>
+      <li class="navbaritem"><a href="{{url_for('home')}}">Home</a></li>
+      <li class="navbaritem"><a href="{{url_for('stats')}}">Stats</a></li>
+      <li class="navbaritem"><a href="{{url_for('select_chat')}}">Chats</a></li>
+      <li class="navbaritem"><a href="{{url_for('todo')}}">TODO</a></li>
+    </ul>
+  </nav>
+
+
+</head>
+
+<body>
+  <br><br>
+  {% block body %}
+  {% endblock %}
+</body>
+
+</html>

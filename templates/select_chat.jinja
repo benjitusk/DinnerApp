@@ -1,0 +1,51 @@
+{% extends "base.jinja" %}
+
+{% block title %}Messages{% endblock %}
+
+{% block body %}
+<ul>
+  {% for chat in chats %}
+    {% if chat.is_group %}
+      <li><a href="/messages/chat/{{ chat.chatID }}">{{ chat.chat_name }}</a></li>
+      <ul>
+        <li>Group Chat</li>
+        <li>Last Person to message: {{ chat.contact_display_name }}</li>
+        <li>Last message:
+          {% if chat.last_type == "image" %}
+            📷 {{ chat.last_body }}
+          {% else %}
+            {{ chat.last_body }}
+          {% endif %}
+        </li>
+        <li>Timestamp:
+          <script type="text/javascript">
+            document.write(prettyDate( {{ chat.last_at }} ))
+          </script>
+        </li>
+      </ul>
+    {% else %}
+      <li><a href="/messages/chat/{{ chat.chatID }}">{{ chat.contact_display_name }}</a></li>
+      <ul>
+        <li>Private Chat</li>
+        <li>Last message:
+          {% if chat.last_type == "image" %}
+            📷
+          {% elif chat.last_type == "gif" %}
+            👾
+          {% elif chat.last_type == "video" %}
+            📹
+          {#% else if chat.last_type == "video" %#}
+
+          {% endif %}
+            {{ chat.last_body }}
+        </li>
+        <li>Timestamp:
+          <script type="text/javascript">
+            document.write(prettyDate( {{ chat.last_at }} ))
+          </script>
+        </li>
+      </ul>
+    {% endif %}
+  {% endfor %}
+</ul>
+{% endblock %}

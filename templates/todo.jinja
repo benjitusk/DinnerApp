@@ -1,0 +1,23 @@
+{% extends "base.jinja" %}
+
+{% block title %}TODO Page{% endblock %}
+
+{% block body %}
+<h3>To Do: (sorted by priority)</h3>
+<ul>
+  <li>Fix messages displaying after the scroll limit of the bottom of the page</li>
+  <li>Set a minimum width to the length of a "message bubble"</li>
+  <li>Make the timestamp right aligned</li>
+  <li>Newline characters get stripped while rendering jinja templates</li>
+  <li>Allow for whatsapp markup syntax</li>
+  <li>Add Date banners between messages sent before and after midnight</li>
+  <li>Make <a href="/messages">the chats page</a> look nice</li>
+  <li>Properly set up dev environment (proper git setup, hiding credentials, etc)</li>
+</ul>
+
+<h3>Done:</h3>
+<ul>
+  <li>Fixed Emoji rendering</li>
+  <li>Make the timestamp show actual time</li>
+</ul>
+{% endblock %}
