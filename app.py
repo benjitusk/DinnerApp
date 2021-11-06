@@ -125,5 +125,6 @@ if __name__ == '__main__':
         app.run(port=1234, debug=True, host="0.0.0.0",
                 ssl_context=("fullchain.pem", "privkey.pem"))
     else:
+        print("Running in dev mode, NOT production")
         app.run(port=1234, debug=True)
 
