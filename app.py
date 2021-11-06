@@ -1,6 +1,7 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 from jinja2 import select_autoescape
+import os
 app = Flask(__name__)
 app.config.from_object("config.Config")
 
@@ -114,11 +115,15 @@ def messages_by_sender(sender_id):
 
 @app.route("/messages/pm/")
 def private_messages():
-    private_messages = Messages.query.filter(
+    messages = Messages.query.filter(
         Messages.messageID.like("%@c.us%")).all()
-    return render_template("display_messages.jinja", messages=private_messages)
+    return render_template("display_messages.jinja", messages=messages)
 
 
 if __name__ == '__main__':
-    app.run(port=1234, debug=True, host="0.0.0.0",
-            ssl_context=("fullchain.pem", "privkey.pem"))
+    if os.getenv("PRODUCTION") == True:
+        app.run(port=1234, debug=True, host="0.0.0.0",
+                ssl_context=("fullchain.pem", "privkey.pem"))
+    else:
+        app.run(port=1234, debug=True)
+
