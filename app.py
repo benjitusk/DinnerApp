@@ -1,6 +1,6 @@
 from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
-from jinja2 import select_autoescape
+from jinja2 import select_autoescape, Environment, FileSystemLoader
 import os
 app = Flask(__name__)
 app.config.from_object("config.Config")
@@ -77,7 +77,32 @@ class Chats(db.Model):
 # | last_pushname | varchar(30)  | NO   |     | NULL    |       |
 # | is_group      | tinyint(1)   | NO   |     | NULL    |       |
 # +---------------+--------------+------+-----+---------+-------+
-
+def makeBold(message):
+	message = list(message)
+	count = 0
+	number_of_asterics = 0
+	asteric_index = []
+	for char in message:
+		if char == "*":
+			number_of_asterics += 1
+			asteric_index.append(count)
+		count += 1
+	if number_of_asterics % 2 == 1:
+		asteric_index.pop()
+	count=0
+	for asteric in asteric_index:
+		if count % 2==0:
+			message[asteric] = "<b>"
+		else:
+			message[asteric] = "</b>"
+		count += 1
+	def convert_back_to_string(list_of_chars):
+		new = ""
+		for x in list_of_chars:
+			new += x
+		return new
+	return convert_back_to_string(message)
+app.jinja_env.globals.update(makeBold=makeBold)
 
 @app.route("/")
 @app.route("/home")
@@ -121,10 +146,12 @@ def private_messages():
 
 
 if __name__ == '__main__':
+<<<<<<< HEAD
     if os.getenv("PRODUCTION"):
         app.run(port=1234, debug=True, host="0.0.0.0",
                 ssl_context=("fullchain.pem", "privkey.pem"))
     else:
         print("Running in dev mode, NOT production")
+=======
+>>>>>>> e7ebfa2556a6574e94c6e8098f91c53ab98bec64
         app.run(port=1234, debug=True)
-
