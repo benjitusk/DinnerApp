@@ -146,12 +146,4 @@ def private_messages():
 
 
 if __name__ == '__main__':
-<<<<<<< HEAD
-    if os.getenv("PRODUCTION"):
-        app.run(port=1234, debug=True, host="0.0.0.0",
-                ssl_context=("fullchain.pem", "privkey.pem"))
-    else:
-        print("Running in dev mode, NOT production")
-=======
->>>>>>> e7ebfa2556a6574e94c6e8098f91c53ab98bec64
         app.run(port=1234, debug=True)
