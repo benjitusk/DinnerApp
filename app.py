@@ -80,31 +80,31 @@ class Chats(db.Model):
 def makeBold(message):
     message=str(message)
     message=message.replace("<", "&lt;")
-	message=message.replace(">", "&gt;")
+    message=message.replace(">", "&gt;")
     message = list(message)
-	count = 0
-	number_of_asterics = 0
-	asteric_index = []
-	for char in message:
-		if char == "*":
-			number_of_asterics += 1
-			asteric_index.append(count)
-		count += 1
-	if number_of_asterics % 2 == 1:
-		asteric_index.pop()
-	count=0
-	for asteric in asteric_index:
-		if count % 2==0:
-			message[asteric] = "<b>"
-		else:
-			message[asteric] = "</b>"
-		count += 1
-	def convert_back_to_string(list_of_chars):
-		new = ""
-		for x in list_of_chars:
-			new += x
-		return new
-	return convert_back_to_string(message)
+    count = 0
+    number_of_asterics = 0
+    asteric_index = []
+    for char in message:
+        if char == "*":
+            number_of_asterics += 1
+            asteric_index.append(count)
+        count += 1
+    if number_of_asterics % 2 == 1:
+        asteric_index.pop()
+    count=0
+    for asteric in asteric_index:
+        if count % 2==0:
+            message[asteric] = "<b>"
+        else:
+            message[asteric] = "</b>"
+        count += 1
+    def convert_back_to_string(list_of_chars):
+        new = ""
+        for x in list_of_chars:
+            new += x
+        return new
+    return convert_back_to_string(message)
 app.jinja_env.globals.update(makeBold=makeBold)
 
 @app.route("/")
