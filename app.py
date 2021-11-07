@@ -78,6 +78,9 @@ class Chats(db.Model):
 # | is_group      | tinyint(1)   | NO   |     | NULL    |       |
 # +---------------+--------------+------+-----+---------+-------+
 def makeBold(message):
+    message=str(message)
+    message=message.replace("<", "&lt;")
+	message=message.replace(">", "&gt;")
     message = message.replace(/</g, "&lt;").replace(/>/g, "&gt;");
 	message = list(message)
 	count = 0
