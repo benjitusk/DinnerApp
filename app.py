@@ -78,6 +78,7 @@ class Chats(db.Model):
 # | is_group      | tinyint(1)   | NO   |     | NULL    |       |
 # +---------------+--------------+------+-----+---------+-------+
 def makeBold(message):
+    message = message.replace(/</g, "&lt;").replace(/>/g, "&gt;");
 	message = list(message)
 	count = 0
 	number_of_asterics = 0
