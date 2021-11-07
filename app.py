@@ -81,8 +81,7 @@ def makeBold(message):
     message=str(message)
     message=message.replace("<", "&lt;")
 	message=message.replace(">", "&gt;")
-    message = message.replace(/</g, "&lt;").replace(/>/g, "&gt;");
-	message = list(message)
+    message = list(message)
 	count = 0
 	number_of_asterics = 0
 	asteric_index = []
