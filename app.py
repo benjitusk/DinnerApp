@@ -1,9 +1,20 @@
 from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 from jinja2 import select_autoescape, Environment, FileSystemLoader
-import os
+import logging
+
 app = Flask(__name__)
 app.config.from_object("config.Config")
+
+# create the logger object
+logger = logging.getLogger("app.py") # Name of the logger (so we can tell which logger is currently logging)
+logger.setLevel(logging.DEBUG)
+# define file handler and set formatter
+file_handler = logging.FileHandler('python_server.log')
+formatter    = logging.Formatter('[%(asctime)s][%(levelname)s] %(filename)s@%(funcName)s:%(lineno)d:\t%(message)s')
+file_handler.setFormatter(formatter)
+# add file handler to logger
+logger.addHandler(file_handler)
 
 # This is to escape HTML strings in non .html files such as .jinja
 app.jinja_env.autoescape = select_autoescape(
@@ -12,6 +23,11 @@ app.jinja_env.autoescape = select_autoescape(
 )
 
 db = SQLAlchemy(app)
+
+
+
+logger.info("Starting server")
+
 
 
 class Messages(db.Model):
@@ -116,28 +132,32 @@ app.jinja_env.globals.update(makeBold=makeBold)
 @app.route("/")
 @app.route("/home")
 def home():
-    print("Home")
+    logger.debug("Loading the home page")
     return render_template("home.jinja")
 
 
 @app.route("/stats")
 def stats():
+    logger.debug("Loading the stats page")
     return render_template("stats.jinja")
 
 
 @app.route("/todo/")
 def todo():
+    logger.debug("Loading the todo page")
     return render_template("todo.jinja")
 
 
 @app.route("/messages")
 def select_chat():
+    logger.debug("Loading the messages page")
     result = Chats.query.order_by(Chats.last_at.desc()).all()
     return render_template("select_chat.jinja", chats=result)
 
 
 @app.route("/messages/chat/<chat_id>")
 def messages_by_chat(chat_id):
+    logger.debug("Loading the messages_by_chat page")
     chat_messages = Messages.query.order_by(Messages.sent_at.desc()).filter_by(
         chatID=chat_id).all()
     return render_template("display_messages.jinja", messages=chat_messages)
@@ -145,11 +165,13 @@ def messages_by_chat(chat_id):
 
 @app.route("/messages/sender/<sender_id>")
 def messages_by_sender(sender_id):
+    logger.debug("Loading the messages_by_sender page")
     return f"Here would be the messages sent by {sender_id}"
 
 
 @app.route("/messages/pm/")
 def private_messages():
+    logger.debug("Loading the private_messages page")
     messages = Messages.query.filter(
         Messages.messageID.like("%@c.us%")).all()
     return render_template("display_messages.jinja", messages=messages)
