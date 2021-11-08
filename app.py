@@ -1,7 +1,8 @@
-from flask import Flask, render_template
-from flask_sqlalchemy import SQLAlchemy
-from jinja2 import select_autoescape, Environment, FileSystemLoader
+import os
 import logging
+from flask_sqlalchemy import SQLAlchemy
+from flask import Flask, render_template
+from jinja2 import select_autoescape, Environment, FileSystemLoader
 
 app = Flask(__name__)
 app.config.from_object("config.Config")
@@ -10,7 +11,7 @@ app.config.from_object("config.Config")
 logger = logging.getLogger("app.py") # Name of the logger (so we can tell which logger is currently logging)
 logger.setLevel(logging.DEBUG)
 # define file handler and set formatter
-file_handler = logging.FileHandler('python_server.log')
+file_handler = logging.FileHandler(os.cwd() + 'python_server.log')
 formatter    = logging.Formatter('[%(asctime)s][%(levelname)s] %(filename)s@%(funcName)s:%(lineno)d:\t%(message)s')
 file_handler.setFormatter(formatter)
 # add file handler to logger
