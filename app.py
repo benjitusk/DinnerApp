@@ -11,7 +11,10 @@ app.config.from_object("config.Config")
 logger = logging.getLogger("app.py") # Name of the logger (so we can tell which logger is currently logging)
 logger.setLevel(logging.DEBUG)
 # define file handler and set formatter
-file_handler = logging.FileHandler(os.getcwd() + 'python_server.log')
+log_dir = "."
+if __name__ != "__main__":
+    log_dir = "/home/dinnerBot"
+file_handler = logging.FileHandler(log_dir + '/python_server.log')
 formatter    = logging.Formatter('[%(asctime)s][%(levelname)s] %(filename)s@%(funcName)s:%(lineno)d:\t%(message)s')
 file_handler.setFormatter(formatter)
 # add file handler to logger
