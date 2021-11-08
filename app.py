@@ -116,6 +116,7 @@ app.jinja_env.globals.update(makeBold=makeBold)
 @app.route("/")
 @app.route("/home")
 def home():
+    print("Home")
     return render_template("home.jinja")
 
 
