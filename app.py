@@ -78,9 +78,15 @@ class Chats(db.Model):
 # | is_group      | tinyint(1)   | NO   |     | NULL    |       |
 # +---------------+--------------+------+-----+---------+-------+
 def makeBold(message):
+    # Warning: The output of this function
+    # marked as TRUSTED HTML. Make sure
+    # we are protected against XSS attacks.
     message=str(message)
     message=message.replace("<", "&lt;")
     message=message.replace(">", "&gt;")
+    message=message.replace("&", "&amp;")
+    message=message.replace("\"", "&quot;")
+    message=message.replace("'", "&#39;")
     message = list(message)
     count = 0
     number_of_asterics = 0
