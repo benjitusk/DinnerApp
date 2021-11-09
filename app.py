@@ -106,9 +106,9 @@ def makeBold(message):
     # marked as TRUSTED HTML. Make sure
     # we are protected against XSS attacks.
     message=str(message)
+    message=message.replace("&", "&amp;")
     message=message.replace("<", "&lt;")
     message=message.replace(">", "&gt;")
-    message=message.replace("&", "&amp;")
     message=message.replace("\"", "&quot;")
     message=message.replace("'", "&#39;")
     message = list(message)
