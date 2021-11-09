@@ -3,14 +3,9 @@
 {% block title %}Stats Page{% endblock %}
 
 {% block body %}
-
-<br>
-{% for i in data %}
-<hr>
-<b>{{ i }}</b>
-
-<br>
-
+{% for image in pictures %}
+{{ image|safe }}
 {% endfor %}
+received 
 
 {% endblock %}
