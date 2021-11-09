@@ -71,27 +71,27 @@ class Config(object):
         "whatsapp", "secure-whatsapp-bot-password", "whatsfordinnerbinny.com")
 
 
-def makeBold(message):
-    message = str(message)
-    message = message.replace("<", "&lt;")
-    message = message.replace(">", "&gt;")
+def find_and_replace(message, target, first, second):
+    #Example: find_and_replace("*", "<b>", "</b>")
     message = list(message)
+    index = []
     count = 0
-    number_of_asterics = 0
-    asteric_index = []
+    char_count = 0
+
     for char in message:
-        if char == "*":
-            number_of_asterics += 1
-            asteric_index.append(count)
+        if char == target:
+            char_count += 1
+            index.append(count)
         count += 1
-    if number_of_asterics % 2 == 1:
-        asteric_index.pop()
+
+    if char_count % 2 == 1:
+        index.pop()
     count = 0
-    for asteric in asteric_index:
+    for i in index:
         if count % 2 == 0:
-            message[asteric] = "<b>"
+            message[i] = first
         else:
-            message[asteric] = "</b>"
+            message[i] = second
         count += 1
 
     def convert_back_to_string(list_of_chars):
@@ -100,6 +100,29 @@ def makeBold(message):
             new += x
         return new
     return convert_back_to_string(message)
+
+def monospace(m):
+    count = 0
+    message = m
+    while "```" in message:
+        if count % 2 == 0:
+            message = message.replace("```", "<code>", 1)
+        else:
+            message = message.replace("```", "</code>", 1)
+    return message
+
+def markUp(m):
+    message = str(m)
+    message = message.replace("<", "&lt;")
+    message = message.replace(">", "&gt;")
+
+    finalMessage = message
+    marks = {"*": ["<b>","</b>"], "_": ["<i>", "/i>"], "~":["<strike>","</strike>"], "```":["<code>", "</code>"]}
+    for char in marks:
+        finalMessage = find_and_replace(finalMessage, char, marks[char][0], marks[char][1])
+    finalMessage = monospace(finalMessage)
+    print(finalMessage)
+
 
 
 def loadPlots():
