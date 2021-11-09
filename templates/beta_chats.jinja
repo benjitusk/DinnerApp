@@ -34,13 +34,17 @@
     }
 
     #frame {
-      width: 95%;
-      min-width: 360px;
+      width: 100%;
+      height: 100vh;
+      position: fixed;
+      background: #efe7dd url("https://cloud.githubusercontent.com/assets/398893/15136779/4e765036-1639-11e6-9201-67e728e86f39.jpg") repeat;
+
+      /*min-width: 360px;
       max-width: 1000px;
       height: 92vh;
       min-height: 300px;
-      max-height: 720px;
       background: #E6EAEA;
+      max-height: 720px;*/
     }
     @media screen and (max-width: 360px) {
       #frame {
@@ -323,7 +327,7 @@
     #frame #sidepanel #search input {
       font-family: "proxima-nova",  "Source Sans Pro", sans-serif;
       padding: 10px 0 10px 46px;
-      width: calc(100% - 25px);
+      width: calc(100%);
       border: none;
       background: #32465a;
       color: #f5f5f5;
@@ -515,8 +519,8 @@
       }
     }
     #frame .content {
-      float: right;
-      width: 60%;
+      /*float: right;
+      width: 60%;*/
       height: 100%;
       overflow: hidden;
       position: relative;
@@ -562,8 +566,8 @@
     }
     #frame .content .messages {
       height: auto;
-      min-height: calc(100% - 93px);
-      max-height: calc(100% - 93px);
+      min-height: calc(100% - 60px);
+      max-height: calc(100% - 60px);
       overflow-y: scroll;
       overflow-x: hidden;
     }
@@ -592,18 +596,18 @@
     }
     #frame .content .messages ul li.sent img {
       margin: 6px 8px 0 0;
+      float: right;
     }
     #frame .content .messages ul li.sent p {
-      background: #435f7a;
-      color: #f5f5f5;
-    }
-    #frame .content .messages ul li.replies img {
+      /*background: #435f7a;
+      color: #f5f5f5;*/
       float: right;
+    }
+    #frame .content .messages ul li.received img {
       margin: 6px 0 0 8px;
     }
-    #frame .content .messages ul li.replies p {
-      background: #f5f5f5;
-      float: right;
+    #frame .content .messages ul li.received p {
+      /*background: #f5f5f5;*/
     }
     #frame .content .messages ul li img {
       width: 22px;
@@ -687,6 +691,72 @@
     #frame .content .message-input .wrap button:focus {
       outline: none;
     }
+
+  #frame .content .messages ul li:first-child {
+    margin: 16px 0 8px;
+  }
+
+  #frame .content .messages ul li.received {
+    background: #fff;
+    border-radius: 0px 5px 5px 5px;
+    float: left;
+  }
+
+  #frame .content .messages ul li.received .metadata {
+    padding: 0 0 0 16px;
+  }
+
+  #frame .content .messages ul li.received:after {
+    border-width: 0px 10px 10px 0;
+    border-color: transparent #fff transparent transparent;
+    top: 0;
+    left: -10px;
+  }
+
+  #frame .content .messages ul li.sent {
+    background: #e1ffc7;
+    border-radius: 5px 0px 5px 5px;
+    float: right;
+  }
+
+  #frame .content .messages ul li.sent:after {
+    border-width: 0px 0 10px 10px;
+    border-color: transparent transparent transparent #e1ffc7;
+    top: 0;
+    right: -10px;
+  }  #frame .content .messages ul li:first-child {
+    margin: 16px 0 8px;
+  }
+
+  #frame .content .messages ul li.received {
+    background: #fff;
+    border-radius: 0px 5px 5px 5px;
+    float: left;
+  }
+
+  #frame .content .messages ul li.received .metadata {
+    padding: 0 0 0 16px;
+  }
+
+  #frame .content .messages ul li.received:after {
+    border-width: 0px 10px 10px 0;
+    border-color: transparent #fff transparent transparent;
+    top: 0;
+    left: -10px;
+  }
+
+  #frame .content .messages ul li.sent {
+    background: #e1ffc7;
+    border-radius: 5px 0px 5px 5px;
+    float: right;
+  }
+
+  #frame .content .messages ul li.sent:after {
+    border-width: 0px 0 10px 10px;
+    border-color: transparent transparent transparent #e1ffc7;
+    top: 0;
+    right: -10px;
+  }
   </style>
 </head>
 <body>
@@ -736,6 +806,7 @@ Website: http://emilcarlsson.se/
 		<div id="contacts">
 			<ul>
       {% for chat in chats %}
+      <a href="{{ url_for('beta_messages_by_chat', chat_id=chat.chatID) }}">
         <li class="contact">
           <div class="wrap">
             {# <span class="contact-status"></span> #}
@@ -746,6 +817,7 @@ Website: http://emilcarlsson.se/
             </div>
           </div>
         </li>
+        </a>
       {% endfor %}
 			</ul>
 		</div>
@@ -757,12 +829,7 @@ Website: http://emilcarlsson.se/
 	<div class="content">
 		<div class="contact-profile">
 			<img src="http://emilcarlsson.se/assets/harveyspecter.png" alt="" />
-			<p>Harvey Specter</p>
-			{# <div class="social-media">
-				<i class="fa fa-facebook" aria-hidden="true"></i>
-				<i class="fa fa-twitter" aria-hidden="true"></i>
-				 <i class="fa fa-instagram" aria-hidden="true"></i>
-			</div> #}
+			<p>{{ messages[0].chat_name }}</p>
 		</div>
 		<div class="messages">
 			<ul>
@@ -770,55 +837,19 @@ Website: http://emilcarlsson.se/
         {% if message.sender == "972535389642@c.us" %}
         <li class="sent">
         {% else %}
-        <li class="replies">
+        <li class="received">
         {% endif %}
           <p>{{ message.body }}</p>
         </li>
       {% endfor %}
-				<li class="sent">
-					<p>How the hell am I supposed to get a jury to believe you when I am not even sure that I do?!</p>
-				</li>
-				<li class="replies">
-					<img src="http://emilcarlsson.se/assets/harveyspecter.png" alt="" />
-					<p>When you're backed against the wall, break the god damn thing down.</p>
-				</li>
-				<li class="replies">
-					<img src="http://emilcarlsson.se/assets/harveyspecter.png" alt="" />
-					<p>Excuses don't win championships.</p>
-				</li>
-				<li class="sent">
-					<img src="http://emilcarlsson.se/assets/mikeross.png" alt="" />
-					<p>Oh yeah, did Michael Jordan tell you that?</p>
-				</li>
-				<li class="replies">
-					<img src="http://emilcarlsson.se/assets/harveyspecter.png" alt="" />
-					<p>No, I told him that.</p>
-				</li>
-				<li class="replies">
-					<img src="http://emilcarlsson.se/assets/harveyspecter.png" alt="" />
-					<p>What are your choices when someone puts a gun to your head?</p>
-				</li>
-				<li class="sent">
-					<img src="http://emilcarlsson.se/assets/mikeross.png" alt="" />
-					<p>What are you talking about? You do what they say or they shoot you.</p>
-				</li>
-				<li class="replies">
-					<img src="http://emilcarlsson.se/assets/harveyspecter.png" alt="" />
-					<p>Wrong. You take the gun, or you pull out a bigger one. Or, you call their bluff. Or, you do any one of a hundred and forty six other things.</p>
-				</li>
+
 			</ul>
-		</div>
-		<div class="message-input">
-			<div class="wrap">
-			<input type="text" placeholder="Write your message..." />
-			<i class="fa fa-paperclip attachment" aria-hidden="true"></i>
-			<button class="submit"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
-			</div>
 		</div>
 	</div>
 </div>
 <script src='//production-assets.codepen.io/assets/common/stopExecutionOnTimeout-b2a7b3fe212eaa732349046d8416e00a9dec26eb7fd347590fbced3ab38af52e.js'></script><script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
-<script >$(".messages").animate({ scrollTop: $(document).height() }, "fast");
+<script >
+//$(".messages").animate({ scrollTop: $(document).height() }, "fast");
 
 $("#profile-img").click(function() {
 	$("#status-options").toggleClass("active");

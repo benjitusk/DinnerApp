@@ -8,3 +8,4 @@ whatsapp.json
 venv/
 __pycache__/
 *.log
+.vscode/
