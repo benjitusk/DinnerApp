@@ -42,3 +42,24 @@ def private_messages():
     messages = Messages.query.filter(
         Messages.messageID.like("%@c.us%")).all()
     return render_template("display_messages.jinja", messages=messages)
+
+@app.route("/beta/chats")
+def beta_chats():
+    logger.debug("Loading the beta_chats page")
+    chats = Chats.query.order_by(Chats.last_at.desc()).all()
+    return render_template("beta_chats.jinja", chats=chats, messages=[])
+
+@app.route("/beta/chats/<chat_id>")
+def beta_messages_by_chat(chat_id):
+    logger.debug("Loading the beta_messages_by_chat page")
+    chats = Chats.query.order_by(Chats.last_at.desc()).all()
+    chat_messages = Messages.query.order_by(Messages.sent_at.desc()).filter_by(
+        chatID=chat_id).all()
+    return render_template("beta_chats.jinja", messages=chat_messages, chats=chats)
+
+@app.route("/beta/chats/<chat_id>.json")
+def beta_chats_json(chat_id):
+    logger.debug("Loading the beta_chats_json page")
+    chat_messages = Messages.query.order_by(Messages.sent_at.desc()).filter_by(
+        chatID=chat_id).all()
+    return jsonify([message.toDict() for message in chat_messages])
