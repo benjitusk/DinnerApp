@@ -121,7 +121,7 @@ def markUp(m):
     for char in marks:
         finalMessage = find_and_replace(finalMessage, char, marks[char][0], marks[char][1])
     finalMessage = monospace(finalMessage)
-    print(finalMessage)
+    return finalMessage
 
 
 
