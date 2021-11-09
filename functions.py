@@ -109,6 +109,7 @@ def monospace(m):
             message = message.replace("```", "<code>", 1)
         else:
             message = message.replace("```", "</code>", 1)
+        count += 1
     return message
 
 def markUp(m):
