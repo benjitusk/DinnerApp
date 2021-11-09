@@ -1,7 +1,8 @@
 import os
 import logging
-from flask_sqlalchemy import SQLAlchemy
-from flask import Flask, render_template
+from dataclasses import dataclass
+from flask_sqlalchemy import SQLAlchemy, inspect
+from flask import Flask, render_template, jsonify
 from jinja2 import select_autoescape, Environment, FileSystemLoader
 
 app = Flask(__name__)
@@ -33,7 +34,7 @@ db = SQLAlchemy(app)
 logger.info("Starting server")
 
 
-
+@dataclass
 class Messages(db.Model):
     __tablename__ = 'messages'
     ID = db.Column(db.Integer(), primary_key=True, nullable=False)
@@ -50,7 +51,8 @@ class Messages(db.Model):
     is_group = db.Column(db.Boolean(), nullable=False)
     chatID = db.Column(db.String(150))
     media_ext = db.Column(db.String(10))
-
+    def toDict(self):
+        return { c.key: getattr(self, c.key) for c in inspect(self).mapper.column_attrs }
 # +--------------+--------------+------+-----+---------+----------------+
 # | Field        | Type         | Null | Key | Default | Extra          |
 # +--------------+--------------+------+-----+---------+----------------+
@@ -69,7 +71,7 @@ class Messages(db.Model):
 # | chatID       | varchar(150) | NO   |     | NULL    |                |
 # +--------------+--------------+------+-----+---------+----------------+
 
-
+@dataclass
 class Chats(db.Model):
     __tablename__ = "chats"
     chatID = db.Column(db.String(150), primary_key=True)
@@ -83,6 +85,8 @@ class Chats(db.Model):
     is_group = db.Column(db.Boolean())
     contact_display_name = db.Column(db.String(100))
     last_media_ext = db.Column(db.String(10))
+    def toDict(self):
+        return { c.key: getattr(self, c.key) for c in inspect(self).mapper.column_attrs }
 
 # +---------------+--------------+------+-----+---------+-------+
 # | Field         | Type         | Null | Key | Default | Extra |
@@ -180,6 +184,26 @@ def private_messages():
         Messages.messageID.like("%@c.us%")).all()
     return render_template("display_messages.jinja", messages=messages)
 
+@app.route("/beta/chats")
+def beta_chats():
+    logger.debug("Loading the beta_chats page")
+    chats = Chats.query.order_by(Chats.last_at.desc()).all()
+    return render_template("beta_chats.jinja", chats=chats, messages=[])
+
+@app.route("/beta/chats/<chat_id>")
+def beta_messages_by_chat(chat_id):
+    logger.debug("Loading the beta_messages_by_chat page")
+    chats = Chats.query.order_by(Chats.last_at.desc()).all()
+    chat_messages = Messages.query.order_by(Messages.sent_at.desc()).filter_by(
+        chatID=chat_id).all()
+    return render_template("beta_chats.jinja", messages=chat_messages, chats=chats)
+
+@app.route("/beta/chats/<chat_id>.json")
+def beta_chats_json(chat_id):
+    logger.debug("Loading the beta_chats_json page")
+    chat_messages = Messages.query.order_by(Messages.sent_at.desc()).filter_by(
+        chatID=chat_id).all()
+    return jsonify([message.toDict() for message in chat_messages])
 
 if __name__ == '__main__':
         app.run(port=1234, debug=True)
