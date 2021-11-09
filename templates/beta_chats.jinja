@@ -829,7 +829,9 @@ Website: http://emilcarlsson.se/
 	<div class="content">
 		<div class="contact-profile">
 			<img src="http://emilcarlsson.se/assets/harveyspecter.png" alt="" />
+      {% if messages!=[] %}
 			<p>{{ messages[0].chat_name }}</p>
+      {% endif %}
 		</div>
 		<div class="messages">
 			<ul>
