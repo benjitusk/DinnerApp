@@ -828,7 +828,7 @@ Website: http://emilcarlsson.se/
 		<div class="contact-profile">
 			<img src="https://mcbconline.org/wp-content/uploads/2020/04/whatsapp-logo.png" alt="" />
       {% if messages!=[] %}
-			<p>{{ messages[0].chat_name }}</p>
+			<p>{{ messages[messages|length-1].chat_name }}</p>
       {% else %}
       <p>Select a chat</p>
       {% endif %}
