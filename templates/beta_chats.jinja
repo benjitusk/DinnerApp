@@ -1,17 +1,17 @@
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <!------ Include the above in your HEAD tag ---------->
 
-<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<link href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
 <!------ Include the above in your HEAD tag ---------->
 
 
 <!DOCTYPE html><html class=''>
 <head>
-  <script src='//production-assets.codepen.io/assets/editor/live/console_runner-079c09a0e3b9ff743e39ee2d5637b9216b3545af0de366d4b9aad9dc87e26bfd.js'></script><script src='//production-assets.codepen.io/assets/editor/live/events_runner-73716630c22bbc8cff4bd0f07b135f00a0bdc5d14629260c3ec49e5606f98fdd.js'></script><script src='//production-assets.codepen.io/assets/editor/live/css_live_reload_init-2c0dc5167d60a5af3ee189d570b1835129687ea2a61bee3513dee3a50c115a77.js'></script><meta charset='UTF-8'><meta name="robots" content="noindex"><link rel="shortcut icon" type="image/x-icon" href="//production-assets.codepen.io/assets/favicon/favicon-8ea04875e70c4b0bb41da869e81236e54394d63638a1ef12fa558a4a835f1164.ico" /><link rel="mask-icon" type="" href="//production-assets.codepen.io/assets/favicon/logo-pin-f2d2b6d2c61838f7e76325261b7195c27224080bc099486ddd6dccb469b8e8e6.svg" color="#111" /><link rel="canonical" href="https://codepen.io/emilcarlsson/pen/ZOQZaV?limit=all&page=74&q=contact+" />
+  {# <script src='https://production-assets.codepen.io/assets/editor/live/console_runner-079c09a0e3b9ff743e39ee2d5637b9216b3545af0de366d4b9aad9dc87e26bfd.js'></script><script src='https://production-assets.codepen.io/assets/editor/live/events_runner-73716630c22bbc8cff4bd0f07b135f00a0bdc5d14629260c3ec49e5606f98fdd.js'></script><script src='https://production-assets.codepen.io/assets/editor/live/css_live_reload_init-2c0dc5167d60a5af3ee189d570b1835129687ea2a61bee3513dee3a50c115a77.js'></script><meta charset='UTF-8'><meta name="robots" content="noindex"><link rel="shortcut icon" type="image/x-icon" href="https://production-assets.codepen.io/assets/favicon/favicon-8ea04875e70c4b0bb41da869e81236e54394d63638a1ef12fa558a4a835f1164.ico" /><link rel="mask-icon" type="" href="https://production-assets.codepen.io/assets/favicon/logo-pin-f2d2b6d2c61838f7e76325261b7195c27224080bc099486ddd6dccb469b8e8e6.svg" color="#111" /><link rel="canonical" href="https://codepen.io/emilcarlsson/pen/ZOQZaV?limit=all&page=74&q=contact+" /> #}
   <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,300' rel='stylesheet' type='text/css'>
 
   <script src="https://use.typekit.net/hoy3lrg.js"></script>
@@ -546,7 +546,7 @@
       width: 40px;
       border-radius: 50%;
       float: left;
-      margin: 9px 12px 0 9px;
+      margin: 16px 12px 0 9px;
     }
     #frame .content .contact-profile p {
       float: left;
@@ -588,7 +588,7 @@
       clear: both;
       float: left;
       margin: 15px 15px 5px 15px;
-      width: calc(100% - 25px);
+      /*width: calc(100% - 25px);*/
       font-size: 0.9em;
     }
     #frame .content .messages ul li:nth-last-child(1) {
@@ -691,73 +691,71 @@
     #frame .content .message-input .wrap button:focus {
       outline: none;
     }
+  
+    #frame .content .messages ul li:first-child {
+      /*margin: 16px 0 8px;*/
+    }
 
-  #frame .content .messages ul li:first-child {
-    margin: 16px 0 8px;
-  }
+    #frame .content .messages ul li.received {
+      background: #fff;
+      border-radius: 0px 10px 10px 10px;
+      float: left;
+    }
 
-  #frame .content .messages ul li.received {
-    background: #fff;
-    border-radius: 0px 5px 5px 5px;
-    float: left;
-  }
+    #frame .content .messages ul li.received .metadata {
+      padding: 0 0 0 16px;
+    }
 
-  #frame .content .messages ul li.received .metadata {
-    padding: 0 0 0 16px;
-  }
+    #frame .content .messages ul li.received:after {
+      border-width: 0px 10px 10px 0;
+      border-color: transparent #fff transparent transparent;
+      top: 0;
+      left: -10px;
+    }
 
-  #frame .content .messages ul li.received:after {
-    border-width: 0px 10px 10px 0;
-    border-color: transparent #fff transparent transparent;
-    top: 0;
-    left: -10px;
-  }
+    #frame .content .messages ul li.sent {
+      background: #e1ffc7;
+      border-radius: 10px 0px 10px 10px;
+      float: right;
+    }
 
-  #frame .content .messages ul li.sent {
-    background: #e1ffc7;
-    border-radius: 5px 0px 5px 5px;
-    float: right;
-  }
+    #frame .content .messages ul li.sent:after {
+      border-width: 0px 0 10px 10px;
+      border-color: transparent transparent transparent #e1ffc7;
+      top: 0;
+      right: -10px;
+    }
 
-  #frame .content .messages ul li.sent:after {
-    border-width: 0px 0 10px 10px;
-    border-color: transparent transparent transparent #e1ffc7;
-    top: 0;
-    right: -10px;
-  }  #frame .content .messages ul li:first-child {
-    margin: 16px 0 8px;
-  }
-
-  #frame .content .messages ul li.received {
-    background: #fff;
-    border-radius: 0px 5px 5px 5px;
-    float: left;
-  }
-
-  #frame .content .messages ul li.received .metadata {
-    padding: 0 0 0 16px;
-  }
-
-  #frame .content .messages ul li.received:after {
-    border-width: 0px 10px 10px 0;
-    border-color: transparent #fff transparent transparent;
-    top: 0;
-    left: -10px;
-  }
-
-  #frame .content .messages ul li.sent {
-    background: #e1ffc7;
-    border-radius: 5px 0px 5px 5px;
-    float: right;
-  }
-
-  #frame .content .messages ul li.sent:after {
-    border-width: 0px 0 10px 10px;
-    border-color: transparent transparent transparent #e1ffc7;
-    top: 0;
-    right: -10px;
-  }
+    #frame .content .messages ul li p span.name {
+      font-size: 80%;
+      padding-bottom: 1em;
+      color: rgba(0, 0, 0, .75);
+    }
+    a:hover {
+      text-decoration: none !important;
+    }
   </style>
+  <script>
+      function prettyDate(timestamp) {
+      function pad(n, width, z) {
+        z = z || '0';
+        n = n + '';
+        return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+      }
+      if (timestamp < 2000000000) // If it's less than 2Billion, it's seconds and
+        timestamp *= 1000;      // needs to be converted to milliseconds
+      let time = new Date(timestamp);
+      let hours = time.getHours();
+      let am = true;
+      if (hours >= 13) {
+        am = false;
+        hours -= 12;
+      }
+      if (hours == 0) hours = 12;
+      let minutes = time.getMinutes();
+      return hours + ":" + pad(minutes, 2) + " " + (am ? "AM" : "PM");
+    }
+  </script>
 </head>
 <body>
 <!-- 
@@ -778,7 +776,7 @@ Website: http://emilcarlsson.se/
 	<div id="sidepanel">
 		<div id="profile">
 			<div class="wrap">
-				<img id="profile-img" src="http://emilcarlsson.se/assets/mikeross.png" class="online" alt="" />
+				<img id="profile-img" src="http://toratshraga.com/wp-content/uploads/2016/11/cropped-torat.jpg" class="online" alt="" />
 				<p>YTS Bot</p>
 				{# <i class="fa fa-chevron-down expand-button" aria-hidden="true"></i> #}
 				<div id="status-options">
@@ -806,17 +804,17 @@ Website: http://emilcarlsson.se/
 		<div id="contacts">
 			<ul>
       {% for chat in chats %}
-      <a href="{{ url_for('beta_messages_by_chat', chat_id=chat.chatID) }}">
-        <li class="contact">
-          <div class="wrap">
-            {# <span class="contact-status"></span> #}
-            <img src="https://www.vhv.rs/dpng/d/81-811595_profil-wa-kosong-lucu-hd-png-download.png" alt="" />
-            <div class="meta">
-                <p class="name">{{ chat.chat_name }}</p>
-                <p class="preview">{{ chat.last_body }}</p>
+        <a href="{{ url_for('messages_by_chat', chat_id=chat.chatID) }}">
+          <li class="contact" id="{{ chat.chatID }}">
+            <div class="wrap">
+              {# <span class="contact-status"></span> #}
+              <img src="https://www.vhv.rs/dpng/d/81-811595_profil-wa-kosong-lucu-hd-png-download.png" alt="" />
+              <div class="meta">
+                  <p class="name">{{ chat.chat_name }}</p>
+                  <p class="preview">{{ chat.last_body }}</p>
+              </div>
             </div>
-          </div>
-        </li>
+          </li>
         </a>
       {% endfor %}
 			</ul>
@@ -828,9 +826,11 @@ Website: http://emilcarlsson.se/
 	</div>
 	<div class="content">
 		<div class="contact-profile">
-			<img src="http://emilcarlsson.se/assets/harveyspecter.png" alt="" />
+			<img src="https://mcbconline.org/wp-content/uploads/2020/04/whatsapp-logo.png" alt="" />
       {% if messages!=[] %}
 			<p>{{ messages[0].chat_name }}</p>
+      {% else %}
+      <p>Select a chat</p>
       {% endif %}
 		</div>
 		<div class="messages">
@@ -841,7 +841,20 @@ Website: http://emilcarlsson.se/
         {% else %}
         <li class="received">
         {% endif %}
-          <p>{{ message.body }}</p>
+          <p>
+          {% if message.sender != "972535389642@c.us" %}
+            <span class="name">{{ message.pushname }}
+              {% if message.is_group %} @ {{ message.chat_name }}{% endif %}
+                <br></span>
+          {% endif %}
+            {# {{ show_media(message) }} #}
+            <span id="{{ messages|length - loop.index }}" style="white-space: pre-wrap;">{{ markUp(message.body)|safe }} {{"\t"}}</span>
+            <span style=" color: rgba(0, 0, 0, .45); font-size: 11px; display: inline;">
+              <script type="text/javascript">
+                document.write(prettyDate( {{ message.sent_at }}))
+              </script>
+            </span>
+          </p>
         </li>
       {% endfor %}
 
@@ -849,9 +862,14 @@ Website: http://emilcarlsson.se/
 		</div>
 	</div>
 </div>
-<script src='//production-assets.codepen.io/assets/common/stopExecutionOnTimeout-b2a7b3fe212eaa732349046d8416e00a9dec26eb7fd347590fbced3ab38af52e.js'></script><script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
+{# <script src='https://production-assets.codepen.io/assets/common/stopExecutionOnTimeout-b2a7b3fe212eaa732349046d8416e00a9dec26eb7fd347590fbced3ab38af52e.js'></script><script src='https://code.jquery.com/jquery-2.2.4.min.js'></script> #}
 <script >
 //$(".messages").animate({ scrollTop: $(document).height() }, "fast");
+
+{% if messages != [] %}
+document.getElementById("{{ messages[0].chatID }}").classList.add("active");
+$("#1").get(0).scrollIntoView()
+{% endif %}
 
 $("#profile-img").click(function() {
 	$("#status-options").toggleClass("active");
