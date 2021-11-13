@@ -1,3 +1,5 @@
+{{ extends "base.jinja" }}
+
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -691,7 +693,7 @@
     #frame .content .message-input .wrap button:focus {
       outline: none;
     }
-  
+
     #frame .content .messages ul li:first-child {
       /*margin: 16px 0 8px;*/
     }
@@ -758,9 +760,9 @@
   </script>
 </head>
 <body>
-<!-- 
+<!--
 
-A concept for a chat interface. 
+A concept for a chat interface.
 
 Try writing a new message! :)
 
@@ -887,7 +889,7 @@ $("#status-options ul li").click(function() {
 	$("#status-busy").removeClass("active");
 	$("#status-offline").removeClass("active");
 	$(this).addClass("active");
-	
+
 	if($("#status-online").hasClass("active")) {
 		$("#profile-img").addClass("online");
 	} else if ($("#status-away").hasClass("active")) {
@@ -899,7 +901,7 @@ $("#status-options ul li").click(function() {
 	} else {
 		$("#profile-img").removeClass();
 	};
-	
+
 	$("#status-options").removeClass("active");
 });
 
