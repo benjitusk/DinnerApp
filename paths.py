@@ -14,7 +14,7 @@ def stats():
     return render_template("stats.jinja", pictures=pictures)
 
 
-@app.route("/todo/")
+@app.route("/todo")
 def todo():
     return render_template("todo.jinja")
 
