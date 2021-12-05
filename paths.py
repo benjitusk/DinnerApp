@@ -45,13 +45,13 @@ def todo():
 
 @app.route("/chats")
 def chats():
-    logger.debug("Loading the beta_chats page")
+    print("Loading the beta_chats page")
     chats = Chats.query.order_by(Chats.last_at.desc()).all()
     return render_template("beta_chats.jinja", chats=chats, messages=[])
 
 @app.route("/chats/<chat_id>")
 def messages_by_chat(chat_id):
-    logger.debug("Loading the beta_messages_by_chat page")
+    print("Loading the beta_messages_by_chat page")
     chats = Chats.query.order_by(Chats.last_at.desc()).all()
     chat_messages = Messages.query.order_by(Messages.sent_at.asc()).filter_by(
         chatID=chat_id).all()
@@ -59,7 +59,7 @@ def messages_by_chat(chat_id):
 
 @app.route("/chats/<chat_id>.json")
 def chats_json(chat_id):
-    logger.debug("Loading the beta_chats_json page")
+    print("Loading the beta_chats_json page")
     chat_messages = Messages.query.order_by(Messages.sent_at.asc()).filter_by(
         chatID=chat_id).all()
     return jsonify([message.toDict() for message in chat_messages])
