@@ -20,15 +20,6 @@
         <a class="nav-link" href="{{url_for('#')}}">About</a>
       </li>
     </ul>
-    <form class="form-inline my-2 my-lg-0" method="POST" action="{{ url_for('search') }}" style="padding-right: 3em;">
-      <input class="form-control mr-sm-2" list="posts" name="search" id="search" placeholder="Search People">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Go!</button>
-    </form>
-
-    <form class="form-inline my-2 my-lg-0" method="POST" action="{{ url_for('searchterm') }}" >
-      <input class="form-control mr-sm-2" list="posts" name="searchterm" id="searchterm" placeholder="Search Transcript">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Go!</button>
-    </form>
   </div>
 </nav>
 
