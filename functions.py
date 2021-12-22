@@ -1,7 +1,9 @@
 from setup import *
+from os import path
 from dotenv import load_dotenv
-import os
-load_dotenv()
+import mpld3
+basedir = path.abspath(path.dirname(__file__))
+load_dotenv(path.join(basedir, '.env'))
 
 class Messages(db.Model):
     __tablename__ = 'messages'
@@ -66,11 +68,6 @@ class Chats(db.Model):
 # | last_pushname | varchar(30)  | NO   |     | NULL    |       |
 # | is_group      | tinyint(1)   | NO   |     | NULL    |       |
 # +---------------+--------------+------+-----+---------+-------+
-
-
-class Config(object):
-    SQLALCHEMY_DATABASE_URI = "mysql+mysqlconnector://{}:{}@{}/whatsapp?charset=utf8mb4".format(
-        os.getenv("MYSQL_USERNAME"), os.getenv("MYSQL_PASSWORD"), os.getenv("MYSQL_HOSTNAME"))
 
 
 def find_and_replace(message, target, first, second):

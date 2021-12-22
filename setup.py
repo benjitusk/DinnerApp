@@ -6,11 +6,17 @@ from flask_bootstrap import Bootstrap
 import matplotlib.pyplot as plt
 #import pandas as pd
 import logging
-import mpld3
+# import mpld3
 import os
+
+class Config(object):
+    SQLALCHEMY_DATABASE_URI = "mysql+mysqlconnector://{}:{}@{}/whatsapp?charset=utf8mb4".format(
+        os.getenv("MYSQL_USERNAME"), os.getenv("MYSQL_PASSWORD"), os.getenv("MYSQL_HOSTNAME"))
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 
 app = Flask(__name__)
+app.config.from_object(Config)
 db = SQLAlchemy(app)
 bootstrap = Bootstrap(app)
 
