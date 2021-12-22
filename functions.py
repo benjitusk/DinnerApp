@@ -129,7 +129,6 @@ def markUp(m):
 
 
 def loadPlots():
-    return []
     fig = plt.figure(figsize=(6, 4))
     ages_x = [25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35]
     dev_y = [38496, 42000, 46752, 49320, 53200,
