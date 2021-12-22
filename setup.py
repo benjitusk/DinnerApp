@@ -4,7 +4,7 @@ from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_bootstrap import Bootstrap
 import matplotlib.pyplot as plt
-import pandas as pd
+#import pandas as pd
 import logging
 import mpld3
 import os
