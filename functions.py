@@ -1,5 +1,7 @@
 from setup import *
-
+from dotenv import load_dotenv
+import os
+load_dotenv()
 
 class Messages(db.Model):
     __tablename__ = 'messages'
@@ -68,7 +70,7 @@ class Chats(db.Model):
 
 class Config(object):
     SQLALCHEMY_DATABASE_URI = "mysql+mysqlconnector://{}:{}@{}/whatsapp?charset=utf8mb4".format(
-        "whatsapp", "secure-whatsapp-bot-password", "whatsfordinnerbinny.com")
+        os.getenv("MYSQL_USERNAME"), os.getenv("MYSQL_PASSWORD"), os.getenv("MYSQL_HOSTNAME"))
 
 
 def find_and_replace(message, target, first, second):
@@ -127,6 +129,7 @@ def markUp(m):
 
 
 def loadPlots():
+    return []
     fig = plt.figure(figsize=(6, 4))
     ages_x = [25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35]
     dev_y = [38496, 42000, 46752, 49320, 53200,
